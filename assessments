@@ -1,0 +1,46 @@
+1.	How many markets sell items that are not edible? First, I need to exclude all exclude all markets that are located in a city that has the same name as the county it's located in. To this, I did the following:
+a.	First, insert a new column on the far left
+b.	Insert a function that states: =IF(F4=G4,TRUE,FALSE) where F4 = city and G4 = County. And drag down for the whole column.
+c.	Drag the function down the list of the excel sheet
+d.	This will mark all matching cities and counties as true.
+e.	To remove all items marked as true, do the following (not solely my work, found source and modified):
+Highlight Column A. Hit Alt+F11 to bring up the VBA. Insert new module and copy the following in:
+Sub DeleteZeroRow()
+'Updateby20140616
+Dim Rng As Range
+Dim WorkRng As Range
+On Error Resume Next
+xTitleId = "KutoolsforExcel"
+Set WorkRng = Application.Selection
+Set WorkRng = Application.InputBox("Range", xTitleId, WorkRng.Address, Type:=8)
+Application.ScreenUpdating = False
+Do
+    Set Rng = WorkRng.Find("True", LookIn:=xlValues)
+    If Not Rng Is Nothing Then
+        Rng.EntireRow.Delete
+    End If
+Loop While Not Rng Is Nothing
+Application.ScreenUpdating = True
+End Sub
+Click Run.
+This will remove all rows that have a matching city and county.
+To find markets that sell items that are not edible, I did the following:
+1.	Highlight whole table and create pivot table
+2.	Select Market Name for row, and add in non-edible items. Not sure what snap and a few others were, so I assumed non-edible as the following
+a.	Trees
+b.	Nursery
+c.	Soap
+d.	Plants
+e.	Crafts
+f.	Maple
+g.	Flowers
+2.	I found the following: The number of markets that sell at least 1 edible item as stated above, is 3341. The number of markets that sell ALL of the non-edible items mentioned above is 78.
+2.	How many farmers markets could you visit in your home state where you could acquire all of the necessary ingredients to make your favorite meal?
+My favorite meal is very simple, and consists of Poultry, vegetables, and herbs: Stir Fry!
+So in my pivot table, I made Market name the row, and added in Poultry, vegetables and herbs as a filter, as well as State – Washington. This give me 58 unique farmers markets in Washington that I can get all needed ingredients for my favorite meal.
+3.	How many markets are within the Oregon Territory area?
+If the Oregon Territory, is only Oregon, then I would just continue using my pivot table to filter state – Oregon which equates to 157.
+Not knowing exactly what was meant by Oregon Territory, I googled that and found it used to consist of current day Oregon, Washington, and Idaho. Using that, there are 358 unique markets.
+4.	What is one unique fact or pattern about farmers markets in the United States that you can recognize using the raw data?
+A few conclusions I can draw from the data:
+•	32% of the markets operate on Federal/state grounds, 23% are co-located with Wholesale markets, and 20% are with educational institutions.
